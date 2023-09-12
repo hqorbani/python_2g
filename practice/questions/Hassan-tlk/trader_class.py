@@ -1,5 +1,5 @@
 class Trader:
-    def __init__(self, stop_lose, buy_limi):
+    def __init__(self, stop_lose, buy_limit):
         self.stop_lose = stop_lose
         self.buy_limit = buy_limit
 
