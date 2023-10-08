@@ -1,2 +1,15 @@
+autopep8==2.0.1
+distlib==0.3.6
+filelock==3.12.2
 MetaTrader5==5.0.45
-numpy==1.25.2
+numpy==1.26.0
+pandas==2.1.1
+platformdirs==3.8.1
+pycodestyle==2.10.0
+python-dateutil==2.8.2
+pytz==2023.3.post1
+six==1.16.0
+TA-Lib @ file:///F:/students/python_2g/session_6/talib/TA_Lib-0.4.24-cp310-cp310-win_amd64.whl#sha256=e730d89fcfc3f0832b3495e6fa0e47ab802eb6aa0c65c5fa2a9fd267e18bdef4
+tomli==2.0.1
+tzdata==2023.3
+virtualenv==20.23.1
