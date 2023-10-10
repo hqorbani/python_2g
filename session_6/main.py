@@ -17,7 +17,7 @@ if bot_1.connect():
     if bot_1.ready_buy(rate_frame):
         print("buy")
     elif bot_1.ready_sell(rate_frame):
-        print("sell")
+        print("do sell")
     else:
         print("nothing")
 

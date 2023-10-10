@@ -33,7 +33,7 @@ class trader:
         rates_frame['slowk_335'], rates_frame['slowd_335'] = ta.STOCH(rates_frame['high'], rates_frame['low'], rates_frame['close'], fastk_period=5, slowk_period=3, slowk_matype=0, slowd_period=3, slowd_matype=0)
         rates_frame['slowk_3314'], rates_frame['slowd_3314'] = ta.STOCH(rates_frame['high'], rates_frame['low'], rates_frame['close'], fastk_period=14, slowk_period=3, slowk_matype=0, slowd_period=3, slowd_matype=0)
         return rates_frame
-    
+    #check for buy
     def ready_buy(rate_frame):
         if (rate_frame.iloc[-1].slowk_335 > 20 and
             rate_frame.iloc[-1].slowk_3314 > 20 and 
