@@ -50,6 +50,31 @@ class trader:
             rate_frame.iloc[-1].high < rate_frame[-1].ema_9):
             return True
 
+    def open_position():
+        symbol = "EURUSD"
+        lot = 0.01
+        point = mt5.symbol_info(symbol).point
+        price = mt5.symbol_info_tick(symbol).ask
+        deviation = 20
+        request = {
+            "action": mt5.TRADE_ACTION_DEAL,
+            "symbol": symbol,
+            "volume": lot,
+            "type": mt5.ORDER_TYPE_BUY,
+            "price": price,
+            # "sl": price - 100 * point,
+            # "tp": price + 100 * point,
+            "deviation": deviation,
+            "magic": 234000,
+            "comment": "python script open",
+            "type_time": mt5.ORDER_TIME_GTC,
+            "type_filling": mt5.ORDER_FILLING_RETURN,
+        }
+        
+        # send a trading request
+        result = mt5.order_send(request)
+        print(type(result))
+        print(result)
     
         
 
