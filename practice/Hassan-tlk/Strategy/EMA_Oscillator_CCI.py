@@ -25,3 +25,25 @@ class EMA_Oscillator(trader):
         rate_frame.iloc[-2].ociltr_CCI_30 < 0): 
             return True
 
+    def open_position():
+        symbol = "EURUSD_i"
+        lot = 0.01
+        point = mt5.symbol_info(symbol).point
+        price = mt5.symbol_info_tick(symbol).ask
+        deviation = 20
+        request = {
+            "action": mt5.TRADE_ACTION_DEAL,
+            "symbol": symbol,
+            "volume": lot,
+            "type": mt5.ORDER_TYPE_BUY,
+            "price": price,
+            # "sl": price - 100 * point,
+            # "tp": price + 100 * point,
+            "deviation": deviation,
+            "magic": 234000,
+            "comment": "python script [EMA_Oscillator] open",
+            "type_time": mt5.ORDER_TIME_GTC,
+            "type_filling": mt5.ORDER_FILLING_RETURN,
+        }
+
+        
