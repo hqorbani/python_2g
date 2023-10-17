@@ -1,6 +1,7 @@
 from trader import trader
 import pandas as pd
 import talib as ta
+import MetaTrader5 as mt5
 
 class EMA_Oscillator(trader):
     def extend_columns(rates_frame):
@@ -25,8 +26,8 @@ class EMA_Oscillator(trader):
         rate_frame.iloc[-2].ociltr_CCI_30 < 0): 
             return True
 
-    def open_position():
-        symbol = "EURUSD_i"
+    def open_position(symbol_str="EURUSD_i", order_type=mt5.ORDER_TYPE_BUY):
+        symbol = symbol_str
         lot = 0.01
         point = mt5.symbol_info(symbol).point
         price = mt5.symbol_info_tick(symbol).ask
@@ -35,7 +36,7 @@ class EMA_Oscillator(trader):
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": symbol,
             "volume": lot,
-            "type": mt5.ORDER_TYPE_BUY,
+            "type": order_type,
             "price": price,
             # "sl": price - 100 * point,
             # "tp": price + 100 * point,
@@ -45,5 +46,7 @@ class EMA_Oscillator(trader):
             "type_time": mt5.ORDER_TIME_GTC,
             "type_filling": mt5.ORDER_FILLING_RETURN,
         }
+        result = mt5.order_send(request)
+        print(result)
 
-        
+
