@@ -51,7 +51,7 @@ class trader:
         print(type(result))
         print(result)
     
-        
+      
 
 
 
