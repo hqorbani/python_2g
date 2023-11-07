@@ -6,5 +6,8 @@ class Context:
     def execute_strategy(self):
         if  (self._strategy_a.ready_open_buy() and
         self._strategy_b.ready_open_buy()):
-            return True
+            return "buy"
+        elif (self._strategy_a.ready_open_sell() and
+        self._strategy_b.ready_open_sell()):
+            return "sell"
         

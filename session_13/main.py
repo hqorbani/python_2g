@@ -7,4 +7,11 @@ strategy_a = StrategyA()
 strategy_b = StrategyB()
 
 context = Context(strategy_a , strategy_b)
-print(context.execute_strategy())
+
+if context.execute_strategy() == "buy":
+    print(context.execute_strategy())
+
+elif context.execute_strategy() == "sell":
+    # pass
+    # open position
+    print(context.execute_strategy())
