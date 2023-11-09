@@ -15,19 +15,22 @@ class trader:
     def get_symbols(str_symbols):
         return mt5.symbols_get(str_symbols)
 
-    def get_candles(symbole , tm , start , number):
-        # symbole , tm , start , number 
+    def get_candles(symbol , tm , start , number):
+        # symbol , tm , start , number 
         # این متد قراره اطلاعات کندلی مربوط به 15 کندل اخیر را دریافت کند
         # ورودی های متد را خودتان مشخص کنید
-        rates = mt5.copy_rates_from_pos(symbole , tm , start , number)
+        rates = mt5.copy_rates_from_pos(symbol , tm , start , number)
         rates_frame = pd.DataFrame(rates)
         rates_frame.drop('real_volume' , inplace = True , axis= 1)
         rates_frame.drop('tick_volume' , inplace = True , axis= 1)
         return rates_frame
 
-    def open_position():
-        symbol = "EURUSD"
-        lot = 0.01
+    def open_position(symbol, p_type, lot):
+        if p_type == "buy":
+            p_type = mt5.ORDER_TYPE_BUY
+        else:
+            p_type = mt5.ORDER_TYPE_SELL
+
         point = mt5.symbol_info(symbol).point
         price = mt5.symbol_info_tick(symbol).ask
         deviation = 20
@@ -35,7 +38,7 @@ class trader:
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": symbol,
             "volume": lot,
-            "type": mt5.ORDER_TYPE_BUY,
+            "type": p_type,
             "price": price,
             "sl": price - 100 * point,
             "tp": price + 100 * point,

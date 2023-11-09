@@ -4,25 +4,34 @@ class Vehicle:
     self.model = model
 
   def move(self):
-    print("Move!")
+    print("Vehicle Move!")
+
+  def stop(self):
+    print("Vehicle stop")
 
 class Car(Vehicle):
   pass
 
 class Boat(Vehicle):
   def move(self):
-    print("Sail!")
+    print("Boat Sail!")
+    
+  def stop(self):
+    print("Boat stop")
 
 class Plane(Vehicle):
   def move(self):
-    print("Fly!")
+    print("Plane Fly!")
+
 
 car1 = Car("Ford", "Mustang") #Create a Car object
 boat1 = Boat("Ibiza", "Touring 20") #Create a Boat object
 plane1 = Plane("Boeing", "747") #Create a Plane object
 
 car1.move()
+car1.stop()
 boat1.move()
+boat1.stop()
 
 
 
