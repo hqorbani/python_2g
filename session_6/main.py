@@ -18,6 +18,7 @@ if bot_1.connect():
 def run_trader(bot_1):
     candles = bot_1.get_candles(symbol , tm , start , number)
     rate_frame = my_strategy.extend_columns(candles)
+    print(rate_frame)
     if my_strategy.ready_buy(rate_frame):
         bot_1.open_position(symbol ,"buy" , 0.01)
         print("do buy")
