@@ -52,4 +52,12 @@ class EMA_Oscillator(trader):
         print(type(result))
         print(result)
 
-
+    def test(symbole , tm , start , number):
+        # symbole , tm , start , number 
+        # این متد قراره اطلاعات کندلی مربوط به 15 کندل اخیر را دریافت کند
+        # ورودی های متد را خودتان مشخص کنید
+        rates = mt5.copy_rates_from_pos(symbole , tm , start , number)
+        rates_frame = pd.DataFrame(rates)
+        rates_frame.drop('real_volume' , inplace = True , axis= 1)
+        rates_frame.drop('tick_volume' , inplace = True , axis= 1)
+        return rates_frame

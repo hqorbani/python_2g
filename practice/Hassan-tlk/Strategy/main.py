@@ -7,7 +7,7 @@ bot_1 = EMA_Oscillator
 if bot_1.connect():
     # account_info = bot_1.get_account_info()
     symbole  = ["EURUSD_i", "EURGBP_i", "XAUUSD_i", "NQ100_m_i"]
-    tm = mt5.TIMEFRAME_M30 # TIMEFRAME_H1
+    tm = mt5.TIMEFRAME_H1 # TIMEFRAME_M30
     start = 0
     number = 45
 
@@ -24,7 +24,7 @@ def run_trader(bot_1, symbole):
         else:
             print(f"EMA_Oscillator have no Ideas about {sym}")
 
-schedule.every(1800).seconds.do(run_trader , bot_1, symbole)
+schedule.every(20).seconds.do(run_trader , bot_1, symbole)
 
 while True:
     schedule.run_pending()
