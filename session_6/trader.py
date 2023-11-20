@@ -21,6 +21,7 @@ class trader:
         # ورودی های متد را خودتان مشخص کنید
         rates = mt5.copy_rates_from_pos(symbol , tm , start , number)
         rates_frame = pd.DataFrame(rates)
+        rates_frame['time'] = pd.to_datetime(rates_frame['time'] , unit= 's')
         rates_frame.drop('real_volume' , inplace = True , axis= 1)
         rates_frame.drop('tick_volume' , inplace = True , axis= 1)
         return rates_frame

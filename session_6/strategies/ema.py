@@ -2,7 +2,6 @@ import pandas as pd
 import talib as ta
 class ema:
     def extend_columns(rates_frame):
-        rates_frame['time'] = pd.to_datetime(rates_frame['time'] , unit= 's')
         rates_frame['ema_9'] = ta.EMA(rates_frame['close'], timeperiod = 9)
         rates_frame['ema_20'] = ta.EMA(rates_frame['close'], timeperiod = 20)
         return rates_frame

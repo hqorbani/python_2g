@@ -2,7 +2,6 @@ import pandas as pd
 import talib as ta
 class stoch_ema:
     def extend_columns(rates_frame):
-        rates_frame['time'] = pd.to_datetime(rates_frame['time'] , unit= 's')
         rates_frame['ema_9'] = ta.EMA(rates_frame['close'], timeperiod = 9)
         rates_frame['slowk_335'], rates_frame['slowd_335'] = ta.STOCH(rates_frame['high'], rates_frame['low'], rates_frame['close'], fastk_period=5, slowk_period=3, slowk_matype=0, slowd_period=3, slowd_matype=0)
         rates_frame['slowk_3314'], rates_frame['slowd_3314'] = ta.STOCH(rates_frame['high'], rates_frame['low'], rates_frame['close'], fastk_period=14, slowk_period=3, slowk_matype=0, slowd_period=3, slowd_matype=0)
