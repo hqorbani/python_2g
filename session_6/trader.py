@@ -25,7 +25,9 @@ class trader:
         rates_frame.drop('real_volume' , inplace = True , axis= 1)
         rates_frame.drop('tick_volume' , inplace = True , axis= 1)
         return rates_frame
-
+    def calc_profit(action , symbol , volume , price_open, price_close):
+        return mt5.order_calc_profit(action , symbol , volume , price_open, price_close)
+        
     def open_position(symbol, p_type, lot):
         if p_type == "buy":
             p_type = mt5.ORDER_TYPE_BUY
