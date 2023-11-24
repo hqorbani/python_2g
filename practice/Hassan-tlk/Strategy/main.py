@@ -15,7 +15,7 @@ if bot_1.connect():
     candles = bot_1.get_candles("EURUSD_i" , tm , start , number)
     rate_frame = bot_1.extend_columns(candles)
 
-    bot_1.open_position(symbol_str="EURUSD_i", order_type="buy")
+    bot_1.open_position(symbol_str="EURUSD_i", order_type_str="sell")
 # def run_trader(bot_1, symbole):
 #     for sym in symbole:
 #         candles = bot_1.get_candles(sym , tm , start , number)
