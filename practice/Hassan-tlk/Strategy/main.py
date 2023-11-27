@@ -15,7 +15,8 @@ if bot_1.connect():
     candles = bot_1.get_candles("EURUSD_i" , tm , start , number)
     rate_frame = bot_1.extend_columns(candles)
 
-    bot_1.open_position(symbol_str="EURUSD_i", order_type_str="sell")
+    bot_1.open_position(symbol_str="NQ100_m_i", order_type_str="buy")
+
 # def run_trader(bot_1, symbole):
 #     for sym in symbole:
 #         candles = bot_1.get_candles(sym , tm , start , number)
@@ -24,15 +25,15 @@ if bot_1.connect():
 #             print(f"a shooting star candlestick in {sys}")
 #         if bot_1.ready_buy(rate_frame):
 #             print(f"buy on {sym}: bass on EMA_Oscillator")
-#             bot_1.open_position(symbol_str=sym, order_type=mt5.ORDER_TYPE_BUY)
+#             bot_1.open_position(symbol_str=sym, order_type_str="buy")
 #         elif bot_1.ready_sell(rate_frame):
 #             print(f"sell on {sym}: bass on EMA_Oscillator")
-#             bot_1.open_position(symbol_str=sym, order_type=mt5.ORDER_TYPE_SELL)
+#             bot_1.open_position(symbol_str=sym, order_type_str="sell")
 #         else:
 #             print(f"EMA_Oscillator have no Ideas about {sym}")
 #     print("===============",candles.iloc[-1].time,"====================")
 
-# schedule.every(1800).seconds.do(run_trader , bot_1, symbole)
+# schedule.every(20).seconds.do(run_trader , bot_1, symbole)
 
 # while True:
 #     schedule.run_pending()

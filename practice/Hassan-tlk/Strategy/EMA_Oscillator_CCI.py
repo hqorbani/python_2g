@@ -2,6 +2,7 @@ from trader import trader
 import pandas as pd
 import talib as ta
 import MetaTrader5 as mt5
+import json
 
 class EMA_Oscillator(trader):
     def extend_columns(rates_frame):
@@ -27,55 +28,63 @@ class EMA_Oscillator(trader):
             return True
 
     def open_position(symbol_str="EURUSD_i", order_type_str="buy"):
+        data = __class__.read_json()
+
+        symbol_info_dict = __class__.symbol_info(symbol_str)
+        sym_digit = symbol_info_dict["digits"]
+        sym_digit = "0"*sym_digit
+        sym_digit = int("1"+sym_digit)
         
         symbol = symbol_str
-        lot = 0.01
+        lot = data[symbol]["lot"]
         point = mt5.symbol_info(symbol).point
         price = mt5.symbol_info_tick(symbol).ask
         
-        risk_percent = 2
+        risk_percent = data[symbol]["risk_percent"]
         # vvvvvvvvvv Calculate StopLost AND TakeProfit vvvvvvvvv
         order_type = order_type_str
         account_info_dict = __class__.get_account_info()
         free_margin = account_info_dict["margin_free"]
-        from_, to = (price - 300 * point)*100000, (price + 300 * point)*100000
+        from_, to = (price - 300 * point)*sym_digit, (price + 300 * point)*sym_digit
         # print("Profit Buy:", __class__.calc_profit(mt5.ORDER_TYPE_BUY , symbol , 0.01 , price, from_))
         # print("Profit Sell:", __class__.calc_profit(mt5.ORDER_TYPE_SELL , symbol , 0.01 , price, from_))
-        print(price, from_, to, int(from_), free_margin)
+        # print(price, from_, to, int(from_), free_margin)
         # print(int(price), int(to))
-        for close_price in range(int(from_), int(price*100000)):
-            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_BUY , symbol , 0.01 , price, close_price/100000)
+        for close_price in range(int(from_), int(price*sym_digit)):
+            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_BUY , symbol , 0.01 , price, close_price/sym_digit)
             precent = profit_calc * (free_margin/100)
             if order_type == "buy" and ((0.2 - risk_percent) >= precent >= (risk_percent + 0.2)*-1) :
-                sl = close_price/100000
+                sl = close_price/sym_digit
                 # print("buy=====", profit_calc, precent, sl)
 
-            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_SELL , symbol , 0.01 , price, close_price/100000)
+            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_SELL , symbol , 0.01 , price, close_price/sym_digit)
             precent = profit_calc * (free_margin/100)
             if order_type == "sell" and ((risk_percent + 0.2) >= precent >= (risk_percent - 0.2)):
-                tp = close_price/100000
+                tp = close_price/sym_digit
                 # print("sell", profit_calc, precent)
 
-        for close_price in range(int(price*100000), int(to)):
-            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_BUY , symbol , 0.01 , price, close_price/100000)
+        for close_price in range(int(price*sym_digit), int(to)):
+            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_BUY , symbol , 0.01 , price, close_price/sym_digit)
             precent = profit_calc * (free_margin/100)
             if order_type == "buy" and ((risk_percent + 0.2) >= precent >= (risk_percent - 0.2)) :
-                tp = close_price/100000
+                tp = close_price/sym_digit
                 # print("buy", profit_calc, precent, tp)
 
-            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_SELL , symbol , 0.01 , price, close_price/100000)
+            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_SELL , symbol , 0.01 , price, close_price/sym_digit)
             precent = profit_calc * (free_margin/100)
-            print(close_price, precent, profit_calc)
+            # print(close_price, precent, profit_calc)
             if order_type == "sell" and ((0.2 - risk_percent) >= precent >= (risk_percent + 0.2)*-1):
-                sl = close_price/100000
+                sl = close_price/sym_digit
                 # print("sell", profit_calc, precent)
         # ^^^^^^^ Calculate StopLost AND TakeProfit ^^^^^^^^^
 
 
-        print("debug", profit_calc, precent, sl, tp)
+        print("debug"," price", price," profit_calc", profit_calc," precent", precent, sl, tp)
+        
         if order_type == "buy":
             order_type = mt5.ORDER_TYPE_BUY
         elif order_type == "sell":
+            price = mt5.symbol_info_tick(symbol).bid
             order_type = mt5.ORDER_TYPE_SELL
             
         deviation = 20
@@ -117,5 +126,16 @@ class EMA_Oscillator(trader):
     
     def calc_profit(action , symbol , volume , price_open, price_close):
         return mt5.order_calc_profit(action , symbol , volume , price_open, price_close)
+
+    def symbol_info(sym):
+        symbol_info_dict = mt5.symbol_info(sym)._asdict()
+        return symbol_info_dict
+
+    def read_json():
+        # Opening JSON file
+        f = open('practice/Hassan-tlk/Strategy/data.json')
+        # returns JSON object as a dictionary
+        data = json.load(f)
+        return data
 
 
