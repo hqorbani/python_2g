@@ -12,6 +12,7 @@ class EMA_Oscillator(trader):
 
         rates_frame['ociltr_CCI_30'] = ta.CCI(rates_frame['high'], rates_frame['low'], rates_frame['close'], timeperiod=30)
         
+        rates_frame['shooting_star'] = ta.CDLSHOOTINGSTAR(rates_frame['open'], rates_frame['high'], rates_frame['low'], rates_frame['close'])
         return rates_frame
 
     #check for buy
@@ -46,31 +47,31 @@ class EMA_Oscillator(trader):
         account_info_dict = __class__.get_account_info()
         free_margin = account_info_dict["margin_free"]
         from_, to = (price - 300 * point)*sym_digit, (price + 300 * point)*sym_digit
-        # print("Profit Buy:", __class__.calc_profit(mt5.ORDER_TYPE_BUY , symbol , 0.01 , price, from_))
-        # print("Profit Sell:", __class__.calc_profit(mt5.ORDER_TYPE_SELL , symbol , 0.01 , price, from_))
+        # print("Profit Buy:", __class__.calc_profit(mt5.ORDER_TYPE_BUY , symbol , lot , price, from_))
+        # print("Profit Sell:", __class__.calc_profit(mt5.ORDER_TYPE_SELL , symbol , lot , price, from_))
         # print(price, from_, to, int(from_), free_margin)
         # print(int(price), int(to))
         for close_price in range(int(from_), int(price*sym_digit)):
-            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_BUY , symbol , 0.01 , price, close_price/sym_digit)
+            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_BUY , symbol , lot , price, close_price/sym_digit)
             precent = profit_calc * (free_margin/100)
             if order_type == "buy" and ((0.2 - risk_percent) >= precent >= (risk_percent + 0.2)*-1) :
                 sl = close_price/sym_digit
                 # print("buy=====", profit_calc, precent, sl)
 
-            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_SELL , symbol , 0.01 , price, close_price/sym_digit)
+            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_SELL , symbol , lot , price, close_price/sym_digit)
             precent = profit_calc * (free_margin/100)
             if order_type == "sell" and ((risk_percent + 0.2) >= precent >= (risk_percent - 0.2)):
                 tp = close_price/sym_digit
                 # print("sell", profit_calc, precent)
 
         for close_price in range(int(price*sym_digit), int(to)):
-            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_BUY , symbol , 0.01 , price, close_price/sym_digit)
+            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_BUY , symbol , lot , price, close_price/sym_digit)
             precent = profit_calc * (free_margin/100)
             if order_type == "buy" and ((risk_percent + 0.2) >= precent >= (risk_percent - 0.2)) :
                 tp = close_price/sym_digit
                 # print("buy", profit_calc, precent, tp)
 
-            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_SELL , symbol , 0.01 , price, close_price/sym_digit)
+            profit_calc = __class__.calc_profit(mt5.ORDER_TYPE_SELL , symbol , lot , price, close_price/sym_digit)
             precent = profit_calc * (free_margin/100)
             # print(close_price, precent, profit_calc)
             if order_type == "sell" and ((0.2 - risk_percent) >= precent >= (risk_percent + 0.2)*-1):
@@ -110,13 +111,13 @@ class EMA_Oscillator(trader):
         print(type(result))
         print(result)
 
-    def shooting_star(rate_frame):
+    def shooting_star(rate_frame, n=0):
         # before candle:
-        b_candle = rate_frame.iloc[-4]
+        b_candle = rate_frame.iloc[n-4]
         # current candle:
-        c_candle = rate_frame.iloc[-3]
+        c_candle = rate_frame.iloc[n-3]
         # next candle:
-        n_candle = rate_frame.iloc[-2]
+        n_candle = rate_frame.iloc[n-2]
         if ((b_candle.open < b_candle.close) and
         (n_candle.open > n_candle.close) and
         (c_candle.open > c_candle.close) and
