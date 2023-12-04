@@ -1,0 +1,38 @@
+{
+    "EURUSD_i": {
+        "active": true,
+        "lot": 0.01,
+        "risk_percent": 2, 
+        "candle_number": 300 
+    },
+    "USDJPY_i": {
+        "active": true,
+        "lot": 0.01,
+        "risk_percent": 2, 
+        "candle_number": 300 
+    },
+    "GBPUSD_i": {
+        "active": true,
+        "lot": 0.01,
+        "risk_percent": 2, 
+        "candle_number": 300 
+    },
+    "EURGBP_i": {
+        "active": true,
+        "lot": 0.01,
+        "risk_percent": 2, 
+        "candle_number": 300 
+    },
+    "XAUUSD_i": {
+        "active": true,
+        "lot": 0.01,
+        "risk_percent": 2, 
+        "candle_number": 300 
+    },
+    "NQ100_m_i": {
+        "active": true,
+        "lot": 0.01,
+        "risk_percent": 2, 
+        "candle_number": 300 
+    }
+}
