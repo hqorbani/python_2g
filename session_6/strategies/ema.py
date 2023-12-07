@@ -4,6 +4,8 @@ class ema:
     def extend_columns(rates_frame):
         rates_frame['ema_9'] = ta.EMA(rates_frame['close'], timeperiod = 9)
         rates_frame['ema_20'] = ta.EMA(rates_frame['close'], timeperiod = 20)
+        rates_frame['shooting_star'] = ta.CDLSHOOTINGSTAR(rates_frame['open'], rates_frame['high'], rates_frame['low'], rates_frame['close'])
+        rates_frame['morning_star'] = ta.CDLMORNINGSTAR(rates_frame['open'], rates_frame['high'], rates_frame['low'], rates_frame['close'], penetration=0)
         return rates_frame
     #check for buy
     def ready_buy(rate_frame):
