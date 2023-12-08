@@ -21,8 +21,6 @@ if bot_1.connect():
         if (((rate_frame.iloc[i].ema_8 < rate_frame.iloc[i].ema_28) and 
         (rate_frame.iloc[i+1].ema_8 > rate_frame.iloc[i+1].ema_28)) and
         rate_frame.iloc[i+1].ociltr_CCI_30 > 0):
-            possition_status["start_price"] = rate_frame.iloc[i+1].open
-            possition_status["p_type"] = "buy"
             buy_temp = {}
             buy_temp.update({"time": rate_frame.iloc[i+1]["time"]})
             buy_temp.update({"close": rate_frame.iloc[i+1]["close"]})
@@ -31,8 +29,6 @@ if bot_1.connect():
         elif (((rate_frame.iloc[i].ema_8 > rate_frame.iloc[i].ema_28) and 
         (rate_frame.iloc[i+1].ema_8 < rate_frame.iloc[i+1].ema_28)) and
         rate_frame.iloc[i+1].ociltr_CCI_30 < 0):
-            possition_status["start_price"] = rate_frame.iloc[i+1].open
-            possition_status["p_type"] = "sell"
             sell_temp = {}
             sell_temp.update({"time": rate_frame.iloc[i+1]["time"]})
             sell_temp.update({"close": rate_frame.iloc[i+1]["close"]})

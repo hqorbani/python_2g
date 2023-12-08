@@ -1,5 +1,5 @@
-from trader import trader
-class Pattern_recog(trader):
+from trader import Trader
+class Pattern_recog(Trader):
     # def __init__(self) -> None:
     #     super().__init__()
     

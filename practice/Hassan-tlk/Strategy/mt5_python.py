@@ -1,5 +1,8 @@
+# vvvvvvvvvvvvvvvvvvvvvvvvvv THIS FILE IS FOR TEST vvvvvvvvvvvvvvvvvvvvvvvvvv
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^ THIS FILE IS FOR TEST ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 import pandas as pd
-from trader import trader
+from trader import Trader
 from EMA_Oscillator_CCI import EMA_Oscillator
 import schedule
 import time
@@ -53,7 +56,25 @@ else:
     print("Disconnect")
 
 
-d = "0"*5
-print(d)
-d = "1"+d
-print(type(d))
+# d = "0"*5
+# print(d)
+# d = "1"+d
+# print(type(d))
+    
+
+from trader import Trader
+from EMA_Oscillator_CCI import EMA_Oscillator
+from pattern_recog import Pattern_recog
+import schedule
+import time
+import MetaTrader5 as mt5
+
+prnt_bot = Trader
+bot_1 = EMA_Oscillator
+Pttrn_rcg = Pattern_recog
+
+print(repr(bot_1))
+bots_lst = [bot_1, prnt_bot]
+
+for i in bots_lst:
+    print(i.from_bot())
