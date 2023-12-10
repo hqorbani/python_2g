@@ -1,10 +1,14 @@
-from trader import trader
+from trader import Trader
 import pandas as pd
 import talib as ta
 import MetaTrader5 as mt5
 import json
 
-class EMA_Oscillator(trader):
+class EMA_Oscillator(Trader):
+    def from_bot():
+        # print("EMA_Oscillator Trader")
+        return "EMA_Oscillator Trader"
+    
     def extend_columns(rates_frame):
         rates_frame['time'] = pd.to_datetime(rates_frame['time'] , unit= 's')
         rates_frame['ema_8'] = ta.EMA(rates_frame['close'], timeperiod = 8)
