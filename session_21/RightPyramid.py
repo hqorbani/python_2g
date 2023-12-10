@@ -5,7 +5,7 @@ class RightPyramid(Triangle, Square):
         self.base = base
         self.slant_height = slant_height
         super().__init__(base, height)
-        super().__init__(base)
+        super(Square,self).__init__(base,base)
     def area(self):
         base_area = super().area()
         perimeter = super().perimeter()
